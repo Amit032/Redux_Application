@@ -13,32 +13,26 @@ const CourseList = ({ courses, onDeleteClick, filterValue }) => {
     setPageOfItems(pageOfItem);
   };
 
-  // const handleShort = value => {
-  //   var shortedCourse = courses.sort((a, b) =>
-  //     a[value].localeCompare(b[value], undefined, {
-  //       numeric: true,
-  //       sensitivity: "base"
-  //     })
-  //   );
-  //   setShortedCourse(shortedCourse);
-  // };
+  const handleShort = value => {
+    var shortedCourse = courses.sort((a, b) =>
+      a[value].localeCompare(b[value], undefined, {
+        numeric: true,
+        sensitivity: "base"
+      })
+    );
+    setShortedCourse(shortedCourse);
+  };
 
   return (
     <div>
       <table className="table">
         <thead>
           <tr>
-            {/* <th onClick={() => handleShort("id")}>No. Of Course</th>
+            <th onClick={() => handleShort("id")}>No. Of Course</th>
             <th />
             <th onClick={() => handleShort("title")}>Title</th>
             <th onClick={() => handleShort("authorName")}>Author</th>
             <th onClick={() => handleShort("category")}>Category</th>
-            <th /> */}
-            <th>No. Of Course</th>
-            <th />
-            <th>Title</th>
-            <th>Author</th>
-            <th>Category</th>
             <th />
           </tr>
         </thead>
@@ -78,8 +72,7 @@ const CourseList = ({ courses, onDeleteClick, filterValue }) => {
         </tbody>
       </table>
       <div>
-        <Pagination items={courses} onChangePage={onChangePage} />
-        {/* <Pagination items={shortedCourse} onChangePage={onChangePage} /> */}
+        <Pagination items={shortedCourse} onChangePage={onChangePage} />
       </div>
     </div>
   );
