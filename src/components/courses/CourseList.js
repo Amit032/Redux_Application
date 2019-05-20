@@ -1,57 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import Pagination from "../Pagination";
 
 const CourseList = ({ courses, onDeleteClick, filterValue }) => {
-  var counter = 0;
+  const [pageOfItems, setPageOfItems] = useState([]);
+  const [shortedCourse, setShortedCourse] = useState({ courses });
+  console.log(shortedCourse);
+  console.log();
+
+  const onChangePage = pageOfItem => {
+    setPageOfItems(pageOfItem);
+  };
+
+  // const handleShort = value => {
+  //   var shortedCourse = courses.sort((a, b) =>
+  //     a[value].localeCompare(b[value], undefined, {
+  //       numeric: true,
+  //       sensitivity: "base"
+  //     })
+  //   );
+  //   setShortedCourse(shortedCourse);
+  // };
+
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th>No. Of Course</th>
-          <th />
-          <th>Title</th>
-          <th>Author</th>
-          <th>Category</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody>
-        {courses
-          .sort((a, b) => a.title.localeCompare(b.title))
-          .filter(value =>
-            value.title.toLowerCase().match(filterValue.toLowerCase())
-          )
-          .map(course => {
-            return (
-              <tr key={course.id}>
-                <td>{(counter = counter + 1)}</td>
-                <td>
-                  <a
-                    className="btn btn-light"
-                    href={"http://pluralsight.com/courses/" + course.slug}
-                  >
-                    Watch
-                  </a>
-                </td>
-                <td>
-                  <Link to={"/course/" + course.slug}>{course.title}</Link>
-                </td>
-                <td>{course.authorName}</td>
-                <td>{course.category}</td>
-                <td>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => onDeleteClick(course)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-      </tbody>
-    </table>
+    <div>
+      <table className="table">
+        <thead>
+          <tr>
+            {/* <th onClick={() => handleShort("id")}>No. Of Course</th>
+            <th />
+            <th onClick={() => handleShort("title")}>Title</th>
+            <th onClick={() => handleShort("authorName")}>Author</th>
+            <th onClick={() => handleShort("category")}>Category</th>
+            <th /> */}
+            <th>No. Of Course</th>
+            <th />
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {pageOfItems
+            .filter(value =>
+              value.title.toLowerCase().match(filterValue.toLowerCase())
+            )
+            .map(course => {
+              return (
+                <tr key={course.id}>
+                  <td>{course.id}</td>
+                  <td>
+                    <a
+                      className="btn btn-light"
+                      href={"http://pluralsight.com/courses/" + course.slug}
+                    >
+                      Watch
+                    </a>
+                  </td>
+                  <td>
+                    <Link to={"/course/" + course.slug}>{course.title}</Link>
+                  </td>
+                  <td>{course.authorName}</td>
+                  <td>{course.category}</td>
+                  <td>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => onDeleteClick(course)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+      <div>
+        <Pagination items={courses} onChangePage={onChangePage} />
+        {/* <Pagination items={shortedCourse} onChangePage={onChangePage} /> */}
+      </div>
+    </div>
   );
 };
 

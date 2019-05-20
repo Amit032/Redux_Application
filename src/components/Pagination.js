@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const propTypes = {
   items: PropTypes.array.isRequired,
@@ -10,7 +11,7 @@ const propTypes = {
 
 const defaultProps = {
   initialPage: 1,
-  pageSize: 10
+  pageSize: 2
 };
 
 class Pagination extends React.Component {
@@ -45,6 +46,7 @@ class Pagination extends React.Component {
     pager = this.getPager(items.length, page, pageSize);
 
     // get new page of items from items array
+    // var sortedItems = items.sort((a, b) => a.title.localeCompare(b.title));
     var pageOfItems = items.slice(pager.startIndex, pager.endIndex + 1);
 
     // update state
@@ -59,7 +61,7 @@ class Pagination extends React.Component {
     currentPage = currentPage || 1;
 
     // default page size is 10
-    pageSize = pageSize || 10;
+    pageSize = pageSize || 2;
 
     // calculate total pages
     var totalPages = Math.ceil(totalItems / pageSize);
@@ -116,29 +118,64 @@ class Pagination extends React.Component {
 
     return (
       <ul className="pagination">
-        <li className={pager.currentPage === 1 ? "disabled" : ""}>
-          <a onClick={() => this.setPage(1)}>First</a>
+        <li
+          className={
+            pager.currentPage === 1 ? "page-item disabled" : "page-item"
+          }
+        >
+          <a className="page-link" onClick={() => this.setPage(1)}>
+            First
+          </a>
         </li>
-        <li className={pager.currentPage === 1 ? "disabled" : ""}>
-          <a onClick={() => this.setPage(pager.currentPage - 1)}>Previous</a>
+        <li
+          className={
+            pager.currentPage === 1 ? "page-item disabled" : "page-item"
+          }
+        >
+          <a
+            className="page-link"
+            onClick={() => this.setPage(pager.currentPage - 1)}
+          >
+            Previous
+          </a>
         </li>
         {pager.pages.map((page, index) => (
           <li
             key={index}
-            className={pager.currentPage === page ? "active" : ""}
+            className={pager.currentPage === page ? "page-item active" : ""}
           >
-            <a onClick={() => this.setPage(page)}>{page}</a>
+            <a className="page-link" onClick={() => this.setPage(page)}>
+              {page}
+            </a>
           </li>
         ))}
         <li
-          className={pager.currentPage === pager.totalPages ? "disabled" : ""}
+          className={
+            pager.currentPage === pager.totalPages
+              ? "page-item disabled"
+              : "page-item"
+          }
         >
-          <a onClick={() => this.setPage(pager.currentPage + 1)}>Next</a>
+          <a
+            className="page-link"
+            onClick={() => this.setPage(pager.currentPage + 1)}
+          >
+            Next
+          </a>
         </li>
         <li
-          className={pager.currentPage === pager.totalPages ? "disabled" : ""}
+          className={
+            pager.currentPage === pager.totalPages
+              ? "page-item disabled"
+              : "page-item"
+          }
         >
-          <a onClick={() => this.setPage(pager.totalPages)}>Last</a>
+          <a
+            className="page-link"
+            onClick={() => this.setPage(pager.totalPages)}
+          >
+            Last
+          </a>
         </li>
       </ul>
     );
